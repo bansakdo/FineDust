@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/optionItemDustInfo"
+        android:title="미세먼지 구분 정보"
+        />
+    <item android:id="@+id/optionItemAppInfo"
+        android:title="앱 정보"
+        />
+</menu>

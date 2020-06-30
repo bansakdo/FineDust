@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">FineDust</string>
+    <string-array name = "sido">
+        <item>서울특별시</item>
+        <item>부산시</item>
+    </string-array>
+    <string-array name = "sido_seoul">
+        <item>강남구</item>
+        <item>강동구</item>
+        <item>강북구</item>
+        <item>강서구</item>
+        <item>관악구</item>
+        <item>광진구</item>
+        <item>구로구</item>
+        <item>금천구</item>
+        <item>노원구</item>
+        <item>도봉구</item>
+        <item>동대문구</item>
+        <item>동작구</item>
+        <item>마포구</item>
+        <item>서대문구</item>
+        <item>서초구</item>
+        <item>성동구</item>
+        <item>성북구</item>
+        <item>송파구</item>
+        <item>양천구</item>
+        <item>영등포구</item>
+        <item>용산구</item>
+        <item>은평구</item>
+        <item>종로구</item>
+        <item>중구</item>
+        <item>중랑구</item>
+    </string-array>
+    <string-array name = "sido_Busan">
+        <item>개금동</item>
+        <item>광복동</item>
+        <item>광안동</item>
+        <item>기장읍</item>
+        <item>녹산동</item>
+        <item>당리동</item>
+        <item>대신동</item>
+        <item>대연동</item>
+        <item>대저대</item>
+        <item>덕천동</item>
+        <item>덕포동</item>
+        <item>명장동</item>
+        <item>부곡동</item>
+        <item>수정동</item>
+        <item>연산동</item>
+        <item>용수리</item>
+        <item>장림동</item>
+        <item>재송동</item>
+        <item>전포동</item>
+        <item>좌동</item>
+        <item>청룡동</item>
+        <item>청학동</item>
+        <item>태종대</item>
+        <item>학장동</item>
+        <item>화명동</item>
+    </string-array>
+
+</resources>
