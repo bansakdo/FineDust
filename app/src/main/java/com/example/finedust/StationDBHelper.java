@@ -28,7 +28,7 @@ public class StationDBHelper extends SQLiteOpenHelper {
         db.execSQL("insert into station (sName, sSido, sAddr, sCode) values ('강동구', '서울', '서울 강동구 구천면로 42길 59', 111274)");
         db.execSQL("insert into station (sName, sSido, sAddr, sCode) values ('강북구', '서울', '서울 강북구 삼양로 139길 49', 111291)");
         db.execSQL("insert into station (sName, sSido, sAddr, sCode) values ('강서구', '서울', '서울 강서구 강서로 45 다길 71', 111212)");
-        db.execSQL("insert into station (sName, sSido, sAddr, sCode) values ('관약구', '서울', '서울 관악구 신림동길 14', 111251)");
+        db.execSQL("insert into station (sName, sSido, sAddr, sCode) values ('관악구', '서울', '서울 관악구 신림동길 14', 111251)");
         db.execSQL("insert into station (sName, sSido, sAddr, sCode) values ('구로구', '서울', '서울 구로구 가마산로 27길 45', 111221)");
         db.execSQL("insert into station (sName, sSido, sAddr, sCode) values ('노원구', '서울', '서울 노원구 상계로 118', 111311)");
         db.execSQL("insert into station (sName, sSido, sAddr, sCode) values ('영등포구', '서울', '서울특별시 영등포구 당산로 123', 111231)");

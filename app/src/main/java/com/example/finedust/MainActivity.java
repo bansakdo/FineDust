@@ -27,11 +27,12 @@ public class MainActivity extends AppCompatActivity {
 
     Spinner dropSido, dropStation;
     TextView tvDataTime, tvPm10, tvPm25, tvStation, tvStatus;
-    Button btnSearch, btnDetailPm10, btnShare, btnDetailPm25;
+    Button btnSearch, btnDetail, btnShare;
     ImageView img;
     ArrayAdapter<CharSequence> sidoAdapter, stationAdapter;
     View Dialog;
     String state = "good";
+    String stationName, stationAddr;
 
     StationDAO dao;
 
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnSearch = findViewById(R.id.btnSearch);
-        btnDetailPm10 = findViewById(R.id.btnDetailPm10);
 
         img = findViewById(R.id.imageView);
         tvDataTime = findViewById(R.id.tvDataTime);
@@ -52,13 +52,12 @@ public class MainActivity extends AppCompatActivity {
         dropSido  = findViewById(R.id.dropSido);
         dropStation = findViewById(R.id.dropStation);
         btnShare = findViewById(R.id.btnShare);
-        btnDetailPm25 = findViewById(R.id.btnShare);
+        btnDetail = findViewById(R.id.btnDetail);
         sidoAdapter = ArrayAdapter.createFromResource(this, R.array.sido, R.layout.support_simple_spinner_dropdown_item);
         sidoAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         dropSido.setAdapter(sidoAdapter);
 
         dao = StationDAO.open(this);
-//        dbHelper.onCreate(db);
 
         dropSido.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -89,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                String station = tvStation.getText().toString();
+//                String station = tvStation.getText().toString();
+                String station = stationName;
                 String pm10 = tvPm10.getText().toString();
                 String pm25 = tvPm25.getText().toString();
                 String mesureTime = tvDataTime.getText().toString();
@@ -114,10 +114,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-                Station s = dao.getStation(tvStation.getText().toString());
-                s.setsFavo(true);
-                dao.updateStaion(s);
-
                 if((station.equals("") || station == null || station.equals(null)) && !(nowState.equals(""))) {
                     Toast.makeText(getApplicationContext(), "먼저 미세먼지 조회를 해주세요", Toast.LENGTH_SHORT).show();
                 } else {
@@ -134,46 +130,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        btnDetailPm10.setOnClickListener(new View.OnClickListener() {
+        btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                String station = tvStation.getText().toString();
+                String station = stationName;
 
                 if((station.equals("") || station == null || station.equals(null)) ) {
                     Toast.makeText(getApplicationContext(), "먼저 미세먼지 조회를 해주세요", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    Station s = dao.getStation(station);
-                    String sCode = String.valueOf(s.getsCode());
-
-                    String pm10url = "https://www.airkorea.or.kr/web/vicinityStation?item_code=10007&station_code=" + sCode;
-                    String pm25url = "https://www.airkorea.or.kr/web/vicinityStation?item_code=10008&station_code=" + sCode;
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pm10url));
-                    startActivity(intent);
-                }
-
-            }
-        });
-        btnDetailPm25.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                String station = tvStation.getText().toString();
-
-                if((station.equals("") || station == null || station.equals(null)) ) {
-                    Toast.makeText(getApplicationContext(), "먼저 미세먼지 조회를 해주세요", Toast.LENGTH_SHORT).show();
-                } else {
-
-                    Station s = dao.getStation(station);
-                    String sCode = String.valueOf(s.getsCode());
-
-                    String pm25url = "https://www.airkorea.or.kr/web/vicinityStation?item_code=10008&station_code=" + sCode;
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pm25url));
+                    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                    intent.putExtra("station", station);
                     startActivity(intent);
                 }
 
@@ -182,34 +151,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void getsdata() {
-        dao = new StationDAO(MainActivity.this);
-        Station station = dao.getStation(tvStation.getText().toString());
-
-        Toast.makeText(MainActivity.this, station.getsAddr() + ", favorite : " + station.issFavo(), Toast.LENGTH_SHORT).show();
-    }
 
     class MyThread extends AsyncTask {
-        String station;
         @Override
         protected Object doInBackground(Object[] params){
-            station = dropStation.getSelectedItem().toString();
-            //valStation[dropStaion.getSelectedItemPosition()];
-//            AirService2 service2 = new AirService2();
-            Air air = new AirService().getAir(station);
-//            Log.d("air",air.toString());
+            stationName = dropStation.getSelectedItem().toString();
+
+            Station s = dao.getStation(stationName);
+            stationAddr = s.getsAddr();
+
+            Air air = new AirService().getAir(stationName);
             return air;
         }
         @Override
         protected void onPostExecute(Object o){
-//            Log.d("air","onPostExecute:"+o.toString());
             Air air = (Air)o;
 
             Log.i("MAIN_PM10", String.valueOf(air.getPm10()));
             tvDataTime.setText(air.getDataTime());
             tvPm10.setText(String.valueOf(air.getPm10()));
             tvPm25.setText(String.valueOf(air.getPm25()));
-            tvStation.setText(station);
+            tvStation.setText(stationAddr);
             String grade = air.getPm10Grade();
             switch (grade) {
                 case "-" :
@@ -288,6 +250,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.optionItemAppInfo :
+                intent = new Intent(this, AppInfo.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

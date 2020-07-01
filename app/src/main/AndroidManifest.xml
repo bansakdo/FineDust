@@ -24,6 +24,14 @@ package="com.example.finedust">
         android:parentActivityName=".MainActivity">
 
     </activity>
+    <activity android:name=".AppInfo"
+        android:parentActivityName=".MainActivity">
+
+    </activity>
+    <activity android:name=".DetailActivity"
+        android:parentActivityName=".MainActivity">
+
+    </activity>
 </application>
 
 </manifest>

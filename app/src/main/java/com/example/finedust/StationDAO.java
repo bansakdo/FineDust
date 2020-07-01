@@ -17,14 +17,7 @@ public class StationDAO {
     private final static String LOG_TAG = "StationDAO";
     private SQLiteDatabase db;
     private SQLiteOpenHelper dbHelper;
-//
-//    @Insert
-//    void insert(Station station);
-//
-//    @Query("DELETE FROM station")
-//    void delteAll();
-//
-//    @Query("SELECT * from station ORDER BY name ASC")
+
     public  StationDAO(Context ctx) {
         dbHelper = new StationDBHelper(ctx);
     }
